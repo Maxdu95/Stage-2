@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="propel" defaultIdMethod="native" noXsd="true" package="lib.model">
+
+  <table name="activite_prev">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="utilisateur_id" type="INTEGER" />
+    <foreign-key foreignTable="utilisateur" onDelete="cascade">
+      <reference local="utilisateur_id" foreign="id" />
+    </foreign-key>
+    <column name="mois" type="DATE" />
+    <column name="nom_projet" type="VARCHAR" size="64" />
+    <column name="occupation" type="INTEGER" />
+    <index name="activite_prev_FKIndex1">
+      <index-column name="utilisateur_id" />
+    </index>
+  </table>
+
+  <table name="activite_real">
+    <column name="utilisateur_id" type="INTEGER" />
+    <foreign-key foreignTable="utilisateur" onDelete="cascade">
+      <reference local="utilisateur_id" foreign="id" />
+    </foreign-key>
+    <column name="projet_id" type="INTEGER" />
+    <foreign-key foreignTable="projet" onDelete="cascade">
+      <reference local="projet_id" foreign="id"/>
+    </foreign-key>
+    <column name="jour" type="DATE" />
+    <column name="ordre" type="INTEGER" />
+    <column name="duree" type="INTEGER" />
+    <column name="commentaire" type="VARCHAR" size="255" />
+    <column name="etat" type="INTEGER" />
+    <index name="activite_real_FKIndex1">
+      <index-column name="utilisateur_id" />
+    </index>
+    <index name="activite_real_FKIndex2">
+      <index-column name="projet_id" />
+    </index>
+  </table>
+
+  <table name="lien_regroupement_utilisateur">
+    <column name="utilisateur_id" type="INTEGER" required="true" />
+    <foreign-key foreignTable="utilisateur" onDelete="cascade">
+      <reference local="utilisateur_id" foreign="id" />
+    </foreign-key>
+    <column name="regroupement_id" type="INTEGER" />
+    <foreign-key foreignTable="regroupement" onDelete="cascade">
+      <reference local="regroupement_id" foreign="id" />
+    </foreign-key>
+    <index name="lien_regroupement_utilisateur_FKIndex1">
+      <index-column name="utilisateur_id" />
+    </index>
+    <index name="lien_regroupement_utilisateur_FKIndex2">
+      <index-column name="regroupement_id" />
+    </index>
+  </table>
+
+  <table name="utilisateur">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="nom" type="VARCHAR" size="64" />
+    <column name="prenom" type="VARCHAR" size="64" />
+    <column name="email" type="VARCHAR" size="128" />
+    <column name="nni" type="VARCHAR" size="32" />
+    <column name="pole_id" type="INTEGER" />
+    <foreign-key foreignTable="pole">
+      <reference local="pole_id" foreign="id" />
+    </foreign-key>
+    <column name="role" type="INTEGER" />
+    <column name="date_entree" type="DATE" />
+    <column name="date_sortie" type="DATE" />
+    <column name="profil_id" type="INTEGER" required="true" />
+    <foreign-key foreignTable="profil">
+      <reference local="profil_id" foreign="id" />
+    </foreign-key>
+    <column name="cout" type="FLOAT" />
+    <column name="domaine_exp" type="VARCHAR" size="255" />
+    <column name="bureau" type="VARCHAR" size="16" />
+    <column name="tel" type="VARCHAR" size="16" />
+    <column name="societe_id" type="INTEGER" />
+    <foreign-key foreignTable="societe">
+      <reference local="societe_id" foreign="id" />
+    </foreign-key>
+    <column name="nbheure_jour" type="INTEGER" />
+    <column name="pilote" type="INTEGER" />
+    <column name="masque" type="BOOLEAN" />
+    <index name="utilisateur_FKIndex1">
+      <index-column name="profil_id" />
+    </index>
+    <index name="utilisateur_FKIndex2">
+      <index-column name="pole_id" />
+    </index>
+    <index name="utilisateur_FKIndex3">
+      <index-column name="societe_id" />
+    </index>
+  </table>
+
+  <table name="rgpt_projet">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="nom" type="VARCHAR" size="64" />
+    <column name="utilisateur_id" type="INTEGER" />
+    <foreign-key foreignTable="utilisateur" onDelete="cascade">
+      <reference local="utilisateur_id" foreign="id" />
+    </foreign-key>
+    <index name="rgpt_projet_FKIndex1">
+      <index-column name="utilisateur_id" />
+    </index>
+  </table>
+
+  <table name="regroupement">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="nom" type="VARCHAR" size="64" />
+    <column name="nom_fichier" type="VARCHAR" size="64" />
+  </table>
+
+  <table name="projet">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="code" type="VARCHAR" size="16" />
+    <column name="nom" type="VARCHAR" size="64" />
+    <column name="libelle" type="VARCHAR" size="255" />
+    <column name="otp_id" type="INTEGER" />
+    <foreign-key foreignTable="otp">
+      <reference local="otp_id" foreign="id" />
+    </foreign-key>
+    <column name="ventilation" type="INTEGER" />
+    <column name="nature" type="INTEGER" />
+    <column name="conso_t0" type="FLOAT" />
+    <column name="etat" type="INTEGER" />
+    <column name="theme_id" type="INTEGER" />
+    <foreign-key foreignTable="theme">
+      <reference local="theme_id" foreign="id" />
+    </foreign-key>
+    <column name="masque" type="BOOLEAN" />
+    <index name="projet_FKIndex1">
+      <index-column name="otp_id" />
+    </index>
+    <index name="projet_FKIndex2">
+      <index-column name="theme_id" />
+    </index>
+  </table>
+
+  <table name="profil">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="code" type="VARCHAR" size="32" />
+    <column name="libelle" type="VARCHAR" size="128" />
+    <column name="cout" type="FLOAT" />
+    <column name="agent" type="BOOLEAN" />
+  </table>
+
+  <table name="pole">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="nom" type="VARCHAR" size="128" />
+    <column name="pole_parent_id" type="INTEGER" />
+    <column name="responsable_id" type="INTEGER" />
+    <foreign-key foreignTable="pole">
+      <reference local="pole_parent_id" foreign="id" />
+    </foreign-key>
+    <foreign-key foreignTable="utilisateur">
+      <reference local="responsable_id" foreign="id" />
+    </foreign-key>
+  </table>
+
+  <table name="otp">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="otp" type="VARCHAR" size="255" />
+  </table>
+
+  <table name="lien_utilisateur_projet">
+    <column name="utilisateur_id" type="INTEGER" />
+    <foreign-key foreignTable="utilisateur" onDelete="cascade">
+      <reference local="utilisateur_id" foreign="id" />
+    </foreign-key>
+    <column name="projet_id" type="INTEGER" />
+    <foreign-key foreignTable="projet" onDelete="cascade">
+      <reference local="projet_id" foreign="id" />
+    </foreign-key>
+    <index name="lien_utilisateur_projet_FKIndex1">
+      <index-column name="utilisateur_id" />
+    </index>
+    <index name="lien_utilisateur_projet_FKIndex2">
+      <index-column name="projet_id" />
+    </index>
+  </table>
+
+  <table name="lien_rgpt_projet">
+    <column name="rgpt_projet_id" type="INTEGER" required="true" autoIncrement="true" />
+    <foreign-key foreignTable="rgpt_projet" onDelete="cascade">
+      <reference local="rgpt_projet_id" foreign="id" />
+    </foreign-key>
+    <column name="projet_id" type="INTEGER" />
+    <foreign-key foreignTable="projet" onDelete="cascade">
+      <reference local="projet_id" foreign="id" />
+    </foreign-key>
+    <index name="lien_rgpt_projet_FKIndex1">
+      <index-column name="rgpt_projet_id" />
+    </index>
+    <index name="lien_rgpt_projet_FKIndex2">
+      <index-column name="projet_id" />
+    </index>
+  </table>
+
+  <table name="societe">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="nom" type="VARCHAR" size="64" />
+  </table>
+
+  <table name="theme">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="nom" type="VARCHAR" size="255" />
+  </table>
+  
+  <table name="figer">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="mois" type="DATE" />
+  </table>
+
+  <table name="codes_absences">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="numero" type="VARCHAR" size="5" />
+    <column name="description" type="VARCHAR" size="255" />
+  </table>
+  
+  <table name="centre_couts">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="nom" type="VARCHAR" size="255" />
+    <column name="otp_id" type="INTEGER" />
+    <foreign-key foreignTable="otp">
+      <reference local="otp_id" foreign="id" />
+    </foreign-key>
+  </table>
+  
+  <table name="lien_cc_utilisateur">
+    <column name="utilisateur_id" type="INTEGER" />
+    <foreign-key foreignTable="utilisateur" onDelete="cascade">
+      <reference local="utilisateur_id" foreign="id" />
+    </foreign-key>
+    <column name="cc_id" type="INTEGER" />
+    <foreign-key foreignTable="centre_couts" onDelete="cascade">
+      <reference local="cc_id" foreign="id" />
+    </foreign-key>
+    <index name="lien_cc_utilisateur_FKIndex1">
+      <index-column name="utilisateur_id" />
+    </index>
+    <index name="lien_cc_utilisateur_FKIndex2">
+      <index-column name="cc_id" />
+    </index>
+  </table>
+
+  <table name="lien_cc_regroupement">
+    <column name="regroupement_id" type="INTEGER" />
+    <foreign-key foreignTable="regroupement" onDelete="cascade">
+      <reference local="regroupement_id" foreign="id" />
+    </foreign-key>
+    <column name="cc_id" type="INTEGER" />
+    <foreign-key foreignTable="centre_couts" onDelete="cascade">
+      <reference local="cc_id" foreign="id" />
+    </foreign-key>
+    <index name="lien_cc_regroupement_FKIndex1">
+      <index-column name="regroupement_id" />
+    </index>
+    <index name="lien_cc_utilisateur_FKIndex2">
+      <index-column name="cc_id" />
+    </index>
+  </table>
+  
+  <table name="exclusion_cc_otp">
+    <column name="otp_id" type="INTEGER" />
+    <foreign-key foreignTable="otp" onDelete="cascade">
+      <reference local="otp_id" foreign="id" />
+    </foreign-key>
+    <column name="cc_id" type="INTEGER" />
+    <foreign-key foreignTable="centre_couts" onDelete="cascade">
+      <reference local="cc_id" foreign="id" />
+    </foreign-key>
+    <index name="exclusion_cc_otp_FKIndex1">
+      <index-column name="otp_id" />
+    </index>
+    <index name="exclusion_cc_otp_FKIndex2">
+      <index-column name="cc_id" />
+    </index>
+  </table>
+  
+  <table name="ordre_interne">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="nom" type="VARCHAR" size="255" />
+    <column name="otp_id" type="INTEGER" />
+    <foreign-key foreignTable="otp">
+      <reference local="otp_id" foreign="id" />
+    </foreign-key>
+  </table>
+
+  <table name="inclusion_oi_otp">
+    <column name="otp_id" type="INTEGER" primaryKey="true"/>
+    <foreign-key foreignTable="otp" onDelete="cascade">
+      <reference local="otp_id" foreign="id" />
+    </foreign-key>
+    <column name="oi_id" type="INTEGER" primaryKey="true" />
+    <foreign-key foreignTable="ordre_interne" onDelete="cascade">
+      <reference local="oi_id" foreign="id" />
+    </foreign-key>
+    <index name="inclusion_oi_otp_FKIndex2">
+      <index-column name="oi_id" />
+    </index>
+    <column name="desactive" type="TINYINT" />
+    <column name="pourcent" type="DECIMAL" size="5,2"/>
+  </table>
+  
+  <table name="requete">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="utilisateur_id" type="INTEGER" />
+    <foreign-key foreignTable="utilisateur" onDelete="cascade">
+      <reference local="utilisateur_id" foreign="id" />
+    </foreign-key>
+    <column name="nom" type="VARCHAR" size="200" />
+    <column name="date" type="TIMESTAMP" />
+    <index name="requete_FKIndex1">
+      <index-column name="utilisateur_id" />
+    </index>
+  </table>
+  
+  <table name="parametre_requete">
+    <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="requete_id" type="INTEGER" />
+    <foreign-key foreignTable="requete" onDelete="cascade">
+      <reference local="requete_id" foreign="id" />
+    </foreign-key>
+    <column name="nom" type="VARCHAR" size="200" />
+    <column name="valeur" type="VARCHAR" size="200" />
+    <index name="parametre_requete_FKIndex1">
+      <index-column name="requete_id" />
+    </index>
+  </table>
+  
+  <table name="import_redmine_log">
+  	 <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+  	 <column name="date_erreur" type="TIMESTAMP" />
+  	 <column name="email" type="VARCHAR" size="200" />
+  	 <column name="code_saphir" type="VARCHAR" size="100" />
+  	 <column name="erreur" type="LONGVARCHAR" size="200" />
+  </table>
+  
+  <table name="niveau_expertise">
+  	 <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+  	 <column name="niveau" type="VARCHAR" size="100" />
+  	 <column name="min" type="FLOAT" />
+  	 <column name="max" type="FLOAT" />
+  </table>
+  
+  <table name="otp_sans_repartition">
+    <column name="otp_id" type="INTEGER" />
+    <foreign-key foreignTable="otp" onDelete="cascade">
+      <reference local="otp_id" foreign="id" />
+    </foreign-key>
+    <column name="cc_id" type="INTEGER" />
+    <foreign-key foreignTable="centre_couts" onDelete="cascade">
+      <reference local="cc_id" foreign="id" />
+    </foreign-key>
+    <index name="otp_sans_repartition_FKIndex1">
+      <index-column name="otp_id" />
+    </index>
+    <index name="otp_sans_repartition_FKIndex2">
+      <index-column name="cc_id" />
+    </index>
+  </table>
+  
+   <table name="listeUo">
+  	 <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+  	 <column name="nomProjet" type="VARCHAR" size="100"/>
+  	 <column name="Tache" type="VARCHAR" size="100" />
+  	 <column name="Uo" type="FLOAT" />
+  	 <column name="userEmail" type="VARCHAR" size="250" />
+  	 <column name="annee" type="INTEGER"/>
+  	 <column name="mois" type="INTEGER"/>
+  </table>
+  
+  
+</database>
