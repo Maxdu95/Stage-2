@@ -20,3 +20,4 @@ On obtient ensuite un ficher excel avec les résultats suivants:
 [!alt tag](https://cloud.githubusercontent.com/assets/17911035/14314555/2fb7b492-fbf8-11e5-97d3-13e862b0ff80.png)
 </br>
 [!alt tag](https://cloud.githubusercontent.com/assets/17911035/14314556/2fb9f0e0-fbf8-11e5-8ffe-a50d8129cbd0.png)
+
